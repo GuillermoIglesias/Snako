@@ -69,67 +69,68 @@ void pasadizos(int vec[25][80])
     for (i=1; i<4; i++)
     {
         pasadizo_sup=(rand()%62)+7;
-        mvaddch(6,pasadizo_sup++, '1');
-        vec[6][pasadizo_sup]=2;
-        mvaddch(6,pasadizo_sup++, '2');
-        vec[6][pasadizo_sup]=2;
-        mvaddch(6,pasadizo_sup++, '3');
-        vec[6][pasadizo_sup]=2;
+        vec[6][pasadizo_sup]=0;
+        mvaddch(6,pasadizo_sup++, ' ');
+        vec[6][pasadizo_sup]=0;
+        mvaddch(6,pasadizo_sup++, ' ');
+        vec[6][pasadizo_sup]=0;
+        mvaddch(6,pasadizo_sup++, ' ');
     }
     //Pasadizo Inferior
     for (i=1; i<4; i++)
     {
         pasadizo_inf=(rand()%62)+7;
-        mvaddch(18,pasadizo_inf++, '1');
-        vec[18][pasadizo_inf]=2;
-        mvaddch(18,pasadizo_inf++, '2');
-        vec[18][pasadizo_inf]=2;
-        mvaddch(18,pasadizo_inf++, '3');
-        vec[18][pasadizo_inf]=2;
+        vec[18][pasadizo_inf]=0;
+        mvaddch(18,pasadizo_inf++, ' ');
+        vec[18][pasadizo_inf]=0;
+        mvaddch(18,pasadizo_inf++, ' ');
+        vec[18][pasadizo_inf]=0;
+        mvaddch(18,pasadizo_inf++, ' ');
+
     }
     //Pasadizo Izquierda
     for (i=1; i<2; i++)
     {
         pasadizo_izq=(rand()%8)+7;
-        mvaddch(pasadizo_izq++, 5, '1');
-        vec[pasadizo_izq][5]=2;
-        mvaddch(pasadizo_izq++, 5, '2');
-        vec[pasadizo_izq][5]=2;
-        mvaddch(pasadizo_izq++, 5, '3');
-        vec[pasadizo_izq][5]=2;
+        vec[pasadizo_izq][5]=0;
+        mvaddch(pasadizo_izq++, 5, ' ');
+        vec[pasadizo_izq][5]=0;
+        mvaddch(pasadizo_izq++, 5, ' ');
+        vec[pasadizo_izq][5]=0;
+        mvaddch(pasadizo_izq++, 5, ' ');
     }
     //Pasadizo Derecha
     for (i=1; i<2; i++)
     {
         pasadizo_der=(rand()%8)+7;
-        mvaddch(pasadizo_der++, 74, '1');
-        vec[pasadizo_der][74]=2;
-        mvaddch(pasadizo_der++, 74, '2');
-        vec[pasadizo_der][74]=2;
-        mvaddch(pasadizo_der++, 74, '3');
-        vec[pasadizo_der][74]=2;
+        vec[pasadizo_der][74]=0;
+        mvaddch(pasadizo_der++, 74, ' ');
+        vec[pasadizo_der][74]=0;
+        mvaddch(pasadizo_der++, 74, ' ');
+        vec[pasadizo_der][74]=0;
+        mvaddch(pasadizo_der++, 74, ' ');
     }
     //Pasadsizo Interior (Superior)
     for(i=1; i<2; i++)
     {
         interior_sup=(rand()%50)+13;
-        mvaddch(10, interior_sup++, '1');
-        vec[10][interior_sup]=2;
-        mvaddch(10, interior_sup++, '2');
-        vec[10][interior_sup]=2;
-        mvaddch(10, interior_sup++, '3');
-        vec[10][interior_sup]=2;
+        vec[10][interior_sup]=0;
+        mvaddch(10, interior_sup++, ' ');
+        vec[10][interior_sup]=0;
+        mvaddch(10, interior_sup++, ' ');
+        vec[10][interior_sup]=0;
+        mvaddch(10, interior_sup++, ' ');
     }
     //Pasadizo Interior (Inferior)
     for(i=1; i<2; i++)
     {
         interior_inf=(rand()%50)+13;
-        mvaddch(14, interior_inf++, '1');
-        vec[14][interior_inf]=2;
-        mvaddch(14, interior_inf++, '2');
-        vec[14][interior_inf]=2;
-        mvaddch(14, interior_inf++, '3');
-        vec[14][interior_inf]=2;
+        vec[14][interior_inf]=0;
+        mvaddch(14, interior_inf++, ' ');
+        vec[14][interior_inf]=0;
+        mvaddch(14, interior_inf++, ' ');
+        vec[14][interior_inf]=0;
+        mvaddch(14, interior_inf++, ' ');
     }
     refresh();
 }
@@ -144,12 +145,15 @@ void puertas(int vec[25][80])
     for (i=1; i<=4; i++)
     {
         puerta_sup1=(rand()%67)+7;
-        if (vec[6][puerta_sup1]!=2)
+        if (vec[6][puerta_sup1]!=0)
         {
-            mvaddch(6,puerta_sup1, ACS_DIAMOND);
-            mvaddch(5,puerta_sup1, ACS_DIAMOND);
-            mvaddch(4,puerta_sup1, ACS_DIAMOND);
-            mvaddch(3,puerta_sup1, ACS_DIAMOND);
+            mvaddch(6,puerta_sup1, ACS_BLOCK);
+            mvaddch(5,puerta_sup1, ACS_BLOCK);
+            vec[5][puerta_sup1]=1;
+            mvaddch(4,puerta_sup1, ACS_BLOCK);
+            vec[4][puerta_sup1]=1;
+            mvaddch(3,puerta_sup1, ACS_BLOCK);
+            vec[3][puerta_sup1]=1;
         }
         else
             i--;
@@ -158,12 +162,15 @@ void puertas(int vec[25][80])
     for (i=1; i<=4; i++)
     {
         puerta_inf1=(rand()%67)+7;
-        if (vec[18][puerta_inf1]!=2)
+        if (vec[18][puerta_inf1]!=0)
         {
-            mvaddch(18,puerta_inf1, ACS_DIAMOND);
-            mvaddch(19,puerta_inf1, ACS_DIAMOND);
-            mvaddch(20,puerta_inf1, ACS_DIAMOND);
-            mvaddch(21,puerta_inf1, ACS_DIAMOND);
+            mvaddch(18,puerta_inf1, ACS_BLOCK);
+            mvaddch(19,puerta_inf1, ACS_BLOCK);
+            vec[19][puerta_inf1]=1;
+            mvaddch(20,puerta_inf1, ACS_BLOCK);
+            vec[20][puerta_inf1]=1;
+            mvaddch(21,puerta_inf1, ACS_BLOCK);
+            vec[21][puerta_inf1]=1;
         }
         else
             i--;
@@ -172,12 +179,15 @@ void puertas(int vec[25][80])
     for (i=1; i<=3; i++)
     {
         puerta_izq1=(rand()%8)+7;
-        if (vec[puerta_izq1][5]!=2)
+        if (vec[puerta_izq1][5]!=0)
         {
-            mvaddch(puerta_izq1, 5, ACS_DIAMOND);
-            mvaddch(puerta_izq1, 4, ACS_DIAMOND);
-            mvaddch(puerta_izq1, 3, ACS_DIAMOND);
-            mvaddch(puerta_izq1, 2, ACS_DIAMOND);
+            mvaddch(puerta_izq1, 5, ACS_BLOCK);
+            mvaddch(puerta_izq1, 4, ACS_BLOCK);
+            vec[puerta_izq1][4]=1;
+            mvaddch(puerta_izq1, 3, ACS_BLOCK);
+            vec[puerta_izq1][3]=1;
+            mvaddch(puerta_izq1, 2, ACS_BLOCK);
+            vec[puerta_izq1][2]=1;
         }
         else
             i--;
@@ -186,12 +196,15 @@ void puertas(int vec[25][80])
     for (i=1; i<=3; i++)
     {
         puerta_der1=(rand()%8)+7;
-        if (vec[puerta_der1][74]!=2)
+        if (vec[puerta_der1][74]!=0)
         {
-            mvaddch(puerta_der1, 74, ACS_DIAMOND);
-            mvaddch(puerta_der1, 75, ACS_DIAMOND);
-            mvaddch(puerta_der1, 76, ACS_DIAMOND);
-            mvaddch(puerta_der1, 77, ACS_DIAMOND);
+            mvaddch(puerta_der1, 74, ACS_BLOCK);
+            mvaddch(puerta_der1, 75, ACS_BLOCK);
+            vec[puerta_der1][75]=1;
+            mvaddch(puerta_der1, 76, ACS_BLOCK);
+            vec[puerta_der1][76]=1;
+            mvaddch(puerta_der1, 77, ACS_BLOCK);
+            vec[puerta_der1][77]=1;
         }
         else
             i--;
@@ -200,12 +213,15 @@ void puertas(int vec[25][80])
     for (i=1; i<=2; i++)
     {
         puerta_sup2=(rand()%50)+13;
-        if (vec[10][puerta_sup2]!=2)
+        if (vec[10][puerta_sup2]!=0&&vec[6][puerta_sup2]!=0)
         {
-            mvaddch(10,puerta_sup2, ACS_DIAMOND);
-            mvaddch(9,puerta_sup2, ACS_DIAMOND);
-            mvaddch(8,puerta_sup2, ACS_DIAMOND);
-            mvaddch(7,puerta_sup2, ACS_DIAMOND);
+            mvaddch(10,puerta_sup2, ACS_BLOCK);
+            mvaddch(9,puerta_sup2, ACS_BLOCK);
+            vec[9][puerta_sup2]=1;
+            mvaddch(8,puerta_sup2, ACS_BLOCK);
+            vec[8][puerta_sup2]=1;
+            mvaddch(7,puerta_sup2, ACS_BLOCK);
+            vec[7][puerta_sup2]=1;
         }
         else
             i--;
@@ -214,12 +230,15 @@ void puertas(int vec[25][80])
     for (i=1; i<=2; i++)
     {
         puerta_inf2=(rand()%50)+13;
-        if (vec[14][puerta_inf2]!=2)
+        if (vec[14][puerta_inf2]!=0&&vec[18][puerta_inf2]!=0)
         {
-            mvaddch(14,puerta_inf2, ACS_DIAMOND);
-            mvaddch(15,puerta_inf2, ACS_DIAMOND);
-            mvaddch(16,puerta_inf2, ACS_DIAMOND);
-            mvaddch(17,puerta_inf2, ACS_DIAMOND);
+            mvaddch(14,puerta_inf2, ACS_BLOCK);
+            mvaddch(15,puerta_inf2, ACS_BLOCK);
+            vec[15][puerta_inf2]=1;
+            mvaddch(16,puerta_inf2, ACS_BLOCK);
+            vec[16][puerta_inf2]=1;
+            mvaddch(17,puerta_inf2, ACS_BLOCK);
+            vec[17][puerta_inf2]=1;
         }
         else
             i--;
@@ -227,11 +246,18 @@ void puertas(int vec[25][80])
     refresh();
 }
 
+void victoria(int vec[25][80])
+{
+    mvaddch(4,76, ACS_DIAMOND);
+    vec[4][76]=1;
+    refresh();
+}
+
 void cabeza(int vec[25][80])
 {
     int x=3, y=20;
     int ch;
-    const int speed=150;        //Constante de velocidad indirectamente proporcional
+    const int speed=200;        //Constante de velocidad indirectamente proporcional
     bool movimiento=true;
     bool derecha=true;
     bool izquierda=false;
@@ -244,8 +270,8 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                mvaddch(y,x,'>');
                 Sleep(speed);
+                mvaddch(y,x, '>');
                 x++;
                 refresh();
                 ch=getch();
@@ -271,8 +297,8 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                mvaddch(y,x,'<');
                 Sleep(speed);
+                mvaddch(y,x, '<');
                 x--;
                 refresh();
                 ch=getch();
@@ -298,8 +324,8 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                mvaddch(y,x,'^');
                 Sleep(speed);
+                mvaddch(y,x, '^');
                 y--;
                 refresh();
                 ch=getch();
@@ -325,8 +351,8 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                mvaddch(y,x,'v');
                 Sleep(speed);
+                mvaddch(y,x, 'v');
                 y++;
                 refresh();
                 ch=getch();
@@ -369,8 +395,9 @@ int main()
 
     murallas(vec);
     pasadizos(vec);
-    /*puertas(vec);*/
-    cabeza(vec);                       //Funcion Cabeza
+    puertas(vec);
+    victoria(vec);
+    cabeza(vec);
 
     endwin();                          //Finaliza NCurses
     return 0;

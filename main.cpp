@@ -285,11 +285,6 @@ void cabeza(int vec[25][80])
                     derecha=false;
                     abajo=true;
                 }
-                else if (ch==KEY_LEFT)
-                {
-                    derecha=false;
-                    izquierda=true;
-                }
             }
         }
 
@@ -312,11 +307,6 @@ void cabeza(int vec[25][80])
                     izquierda=false;
                     abajo=true;
                 }
-                else if (ch==KEY_RIGHT)
-                {
-                    izquierda=false;
-                    derecha=true;
-                }
             }
         }
 
@@ -329,12 +319,7 @@ void cabeza(int vec[25][80])
                 y--;
                 refresh();
                 ch=getch();
-                if (ch==KEY_DOWN)
-                {
-                    arriba=false;
-                    abajo=true;
-                }
-                else if (ch==KEY_RIGHT)
+                if (ch==KEY_RIGHT)
                 {
                     arriba=false;
                     derecha=true;
@@ -356,12 +341,7 @@ void cabeza(int vec[25][80])
                 y++;
                 refresh();
                 ch=getch();
-                if (ch==KEY_UP)
-                {
-                    abajo=false;
-                    arriba=true;
-                }
-                else if (ch==KEY_RIGHT)
+                if (ch==KEY_RIGHT)
                 {
                     abajo=false;
                     derecha=true;
@@ -378,7 +358,7 @@ void cabeza(int vec[25][80])
 
 int main()
 {
-    int vec [25][80];
+    int vec [25][80]={0};           //Generador de Matriz para comprobaciones futuras
 
     initscr();                      //Inicio NCurses
     keypad(stdscr,1);               //Habilita teclado
@@ -387,11 +367,6 @@ int main()
     cbreak();                       //Activa el envio inmediato de teclas
     nodelay(stdscr,1);              //Desactiva espera de lectura de teclado
     srand(time(NULL));              //Seed para rand()
-
-    for (int i=0; i<25; i++)        //Generador de Matriz para comprobaciones futuras
-        for (int j=0; j<80; j++)
-            vec[i][j]=0;
-
 
     murallas(vec);
     pasadizos(vec);

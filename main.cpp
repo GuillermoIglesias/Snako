@@ -12,15 +12,11 @@ void murallas(int vec[25][80])
     //Cuadro Nivel 0
     for(a=2; a<=22; a++)
     {
-        mvaddch(a,1, ACS_BLOCK);
-        mvaddch(a,78, ACS_BLOCK);
         vec[a][1]=1;
         vec[a][78]=1;
     }
     for(b=1; b<=78; b++)
     {
-        mvaddch(2,b, ACS_BLOCK);
-        mvaddch(22,b, ACS_BLOCK);
         vec[2][b]=1;
         vec[22][b]=1;
     }
@@ -28,30 +24,22 @@ void murallas(int vec[25][80])
     //Cuadro Nivel 1
     for(a=6; a<=18; a++)
     {
-        mvaddch(a,5, ACS_BLOCK);
-        mvaddch(a,74, ACS_BLOCK);
         vec[a][5]=1;
         vec[a][74]=1;
     }
     for(b=5; b<=74; b++)
     {
-        mvaddch(6,b, ACS_BLOCK);
-        mvaddch(18,b, ACS_BLOCK);
         vec[6][b]=1;
         vec[18][b]=1;
     }
     //Cuadro Nivel 2
     for(a=10; a<=14; a++)
     {
-        mvaddch(a,9, ACS_BLOCK);
-        mvaddch(a,70, ACS_BLOCK);
         vec[a][9]=1;
         vec[a][70]=1;
     }
     for(b=9; b<=70; b++)
     {
-        mvaddch(10,b, ACS_BLOCK);
-        mvaddch(14,b, ACS_BLOCK);
         vec[10][b]=1;
         vec[14][b]=1;
     }
@@ -140,20 +128,18 @@ void puertas(int vec[25][80])
     int i;
     int puerta_sup1, puerta_inf1, puerta_izq1, puerta_der1;
     int puerta_sup2, puerta_inf2;
+    int tipo;
 
     //Puerta Superior Nivel 1
     for (i=1; i<=4; i++)
     {
         puerta_sup1=(rand()%67)+7;
+        tipo = (rand()%3)+2;
         if (vec[6][puerta_sup1]!=0)
         {
-            mvaddch(6,puerta_sup1, ACS_BLOCK);
-            mvaddch(5,puerta_sup1, ACS_BLOCK);
-            vec[5][puerta_sup1]=1;
-            mvaddch(4,puerta_sup1, ACS_BLOCK);
-            vec[4][puerta_sup1]=1;
-            mvaddch(3,puerta_sup1, ACS_BLOCK);
-            vec[3][puerta_sup1]=1;
+            vec[5][puerta_sup1]=tipo;
+            vec[4][puerta_sup1]=tipo;
+            vec[3][puerta_sup1]=tipo;
         }
         else
             i--;
@@ -162,15 +148,12 @@ void puertas(int vec[25][80])
     for (i=1; i<=4; i++)
     {
         puerta_inf1=(rand()%67)+7;
+        tipo = (rand()%3)+2;
         if (vec[18][puerta_inf1]!=0)
         {
-            mvaddch(18,puerta_inf1, ACS_BLOCK);
-            mvaddch(19,puerta_inf1, ACS_BLOCK);
-            vec[19][puerta_inf1]=1;
-            mvaddch(20,puerta_inf1, ACS_BLOCK);
-            vec[20][puerta_inf1]=1;
-            mvaddch(21,puerta_inf1, ACS_BLOCK);
-            vec[21][puerta_inf1]=1;
+            vec[19][puerta_inf1]=tipo;
+            vec[20][puerta_inf1]=tipo;
+            vec[21][puerta_inf1]=tipo;
         }
         else
             i--;
@@ -179,15 +162,12 @@ void puertas(int vec[25][80])
     for (i=1; i<=3; i++)
     {
         puerta_izq1=(rand()%8)+7;
+        tipo = (rand()%3)+2;
         if (vec[puerta_izq1][5]!=0)
         {
-            mvaddch(puerta_izq1, 5, ACS_BLOCK);
-            mvaddch(puerta_izq1, 4, ACS_BLOCK);
-            vec[puerta_izq1][4]=1;
-            mvaddch(puerta_izq1, 3, ACS_BLOCK);
-            vec[puerta_izq1][3]=1;
-            mvaddch(puerta_izq1, 2, ACS_BLOCK);
-            vec[puerta_izq1][2]=1;
+            vec[puerta_izq1][4]=tipo;
+            vec[puerta_izq1][3]=tipo;
+            vec[puerta_izq1][2]=tipo;
         }
         else
             i--;
@@ -196,15 +176,12 @@ void puertas(int vec[25][80])
     for (i=1; i<=3; i++)
     {
         puerta_der1=(rand()%8)+7;
+        tipo = (rand()%3)+2;
         if (vec[puerta_der1][74]!=0)
         {
-            mvaddch(puerta_der1, 74, ACS_BLOCK);
-            mvaddch(puerta_der1, 75, ACS_BLOCK);
-            vec[puerta_der1][75]=1;
-            mvaddch(puerta_der1, 76, ACS_BLOCK);
-            vec[puerta_der1][76]=1;
-            mvaddch(puerta_der1, 77, ACS_BLOCK);
-            vec[puerta_der1][77]=1;
+            vec[puerta_der1][75]=tipo;
+            vec[puerta_der1][76]=tipo;
+            vec[puerta_der1][77]=tipo;
         }
         else
             i--;
@@ -213,15 +190,12 @@ void puertas(int vec[25][80])
     for (i=1; i<=2; i++)
     {
         puerta_sup2=(rand()%50)+13;
+        tipo = (rand()%3)+2;
         if (vec[10][puerta_sup2]!=0&&vec[6][puerta_sup2]!=0)
         {
-            mvaddch(10,puerta_sup2, ACS_BLOCK);
-            mvaddch(9,puerta_sup2, ACS_BLOCK);
-            vec[9][puerta_sup2]=1;
-            mvaddch(8,puerta_sup2, ACS_BLOCK);
-            vec[8][puerta_sup2]=1;
-            mvaddch(7,puerta_sup2, ACS_BLOCK);
-            vec[7][puerta_sup2]=1;
+            vec[9][puerta_sup2]=tipo;
+            vec[8][puerta_sup2]=tipo;
+            vec[7][puerta_sup2]=tipo;
         }
         else
             i--;
@@ -230,15 +204,12 @@ void puertas(int vec[25][80])
     for (i=1; i<=2; i++)
     {
         puerta_inf2=(rand()%50)+13;
+        tipo = (rand()%3)+2;
         if (vec[14][puerta_inf2]!=0&&vec[18][puerta_inf2]!=0)
         {
-            mvaddch(14,puerta_inf2, ACS_BLOCK);
-            mvaddch(15,puerta_inf2, ACS_BLOCK);
-            vec[15][puerta_inf2]=1;
-            mvaddch(16,puerta_inf2, ACS_BLOCK);
-            vec[16][puerta_inf2]=1;
-            mvaddch(17,puerta_inf2, ACS_BLOCK);
-            vec[17][puerta_inf2]=1;
+            vec[15][puerta_inf2]=tipo;
+            vec[16][puerta_inf2]=tipo;
+            vec[17][puerta_inf2]=tipo;
         }
         else
             i--;
@@ -253,16 +224,88 @@ void victoria(int vec[25][80])
     refresh();
 }
 
+void imprimir_muralla(int vec[25][80])
+{
+   for (int i=0; i<=25; i++)
+        for (int j=0; j<=80; j++)
+            if (vec[i][j]==1)
+                mvaddch(i,j, ACS_BLOCK);
+    refresh();
+}
+
+void imprimir_puerta(int vec[25][80], int &puerta)
+{
+    //Imprime puertas tipo 2
+    if (puerta%5==0&&puerta%2!=0)
+        for (int i=0; i<=25; i++)
+            for (int j=0; j<=80; j++)
+                if (vec[i][j]==2)
+                {
+                    mvaddch(i,j, ACS_BLOCK);
+                }
+
+    //Elimina puertas tipo 2
+    if (puerta%10==0)
+        for (int i=0; i<=25; i++)
+            for (int j=0; j<=80; j++)
+                if (vec[i][j]==2)
+                {
+                    mvaddch(i,j, ' ');
+                }
+
+    //Imprime puertas tipo 3
+    if (puerta%3==0&&puerta%2!=0)
+        for (int i=0; i<=25; i++)
+            for (int j=0; j<=80; j++)
+                if (vec[i][j]==3)
+                {
+                    mvaddch(i,j, ACS_BLOCK);
+                }
+
+    //Elimina puertas tipo 3
+    if (puerta%6==0)
+        for (int i=0; i<=25; i++)
+            for (int j=0; j<=80; j++)
+                if (vec[i][j]==3)
+                {
+                    mvaddch(i,j, ' ');
+                }
+
+    //Imprime puertas tipo 4
+    if (puerta%7==0&&puerta%2!=0)
+        for (int i=0; i<=25; i++)
+            for (int j=0; j<=80; j++)
+                if (vec[i][j]==4)
+                {
+                    mvaddch(i,j, ACS_BLOCK);
+                }
+
+    //Elimina puertas tipo 4
+    if (puerta%14==0)
+        for (int i=0; i<=25; i++)
+            for (int j=0; j<=80; j++)
+                if (vec[i][j]==4)
+                {
+                    mvaddch(i,j, ' ');
+                }
+
+    if (puerta > 9999)
+        puerta = 0;
+
+    refresh();
+}
+
 void cabeza(int vec[25][80])
 {
     int x=3, y=20;
     int ch;
-    const int speed=200;        //Constante de velocidad indirectamente proporcional
+    const int speed=2;        //Constante de velocidad indirectamente proporcional
     bool movimiento=true;
     bool derecha=true;
     bool izquierda=false;
     bool abajo=false;
     bool arriba=false;
+    int puerta = 0;
 
     while (movimiento)
     {
@@ -270,9 +313,12 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                Sleep(speed);
-                mvaddch(y,x, '>');
+                halfdelay(speed);
+                imprimir_puerta(vec, puerta);
+                puerta++;
+                mvaddch(y,x, ' ');
                 x++;
+                mvaddch(y,x, '>');
                 refresh();
                 ch=getch();
                 if (ch==KEY_UP)
@@ -292,9 +338,12 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                Sleep(speed);
-                mvaddch(y,x, '<');
+                halfdelay(speed);
+                imprimir_puerta(vec, puerta);
+                puerta++;
+                mvaddch(y,x, ' ');
                 x--;
+                mvaddch(y,x, '<');
                 refresh();
                 ch=getch();
                 if (ch==KEY_UP)
@@ -314,9 +363,12 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                Sleep(speed);
-                mvaddch(y,x, '^');
+                halfdelay(speed);
+                imprimir_puerta(vec, puerta);
+                puerta++;
+                mvaddch(y,x, ' ');
                 y--;
+                mvaddch(y,x, '^');
                 refresh();
                 ch=getch();
                 if (ch==KEY_RIGHT)
@@ -336,9 +388,12 @@ void cabeza(int vec[25][80])
         {
             if (vec[y][x]==0)
             {
-                Sleep(speed);
-                mvaddch(y,x, 'v');
+                halfdelay(speed);
+                imprimir_puerta(vec, puerta);
+                puerta++;
+                mvaddch(y,x, ' ');
                 y++;
+                mvaddch(y,x, 'v');
                 refresh();
                 ch=getch();
                 if (ch==KEY_RIGHT)
@@ -369,10 +424,12 @@ int main()
     srand(time(NULL));              //Seed para rand()
 
     murallas(vec);
-    pasadizos(vec);
+    imprimir_muralla(vec);
     puertas(vec);
+    pasadizos(vec);
     victoria(vec);
     cabeza(vec);
+
 
     endwin();                          //Finaliza NCurses
     return 0;

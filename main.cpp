@@ -8,6 +8,7 @@
 void menu()
 {
     //Creacion del borde
+    attron(COLOR_PAIR(1));
     for(int i=0; i<78; i++)
 	{
         mvaddch(1,i+1, ACS_BLOCK);
@@ -19,38 +20,41 @@ void menu()
         mvaddch(i+1,1,ACS_BLOCK);
         mvaddch(i+1,78,ACS_BLOCK);
     }
+    attroff(COLOR_PAIR(1));
 
     //Logo de Snako
-
-    mvprintw(2,2,"                     __    __    __    __                                   ");
-    mvprintw(3,2,"                    /     /     /     /                                     ");
-    mvprintw(4,2,"___________________/  __ /  __ /  __ /  ____________________________________");
-    mvprintw(5,2,"__________________/  /__/  /__/  /__/  /____________________________________");
-    mvprintw(6,2,"                  | /     /     /     /    ______                           ");
-    mvprintw(7,2,"                  |/    _/    _/    _/         O                            ");
-    mvprintw(8,2,"                                          _______/--<                       ");
-    mvaddch(3,25,92);
-    mvaddch(3,31,92);
-    mvaddch(3,37,92);
-    mvaddch(3,43,92);
-    mvaddch(4,26,92);
-    mvaddch(4,32,92);
-    mvaddch(4,38,92);
-    mvaddch(4,44,92);
-    mvaddch(6,24,92);
-    mvaddch(6,30,92);
-    mvaddch(6,36,92);
-    mvaddch(6,42,92);
-    mvaddch(6,45,92);
-    mvaddch(7,25,92);
-    mvaddch(7,31,92);
-    mvaddch(7,37,92);
-    mvaddch(7,43,92);
-    mvaddch(7,51,92);
-    mvaddch(8,44,92);
+    attron(COLOR_PAIR(2));
+    mvprintw(2,2,"                          __    __    __    __                              ");
+    mvprintw(3,2,"                         /     /     /     /                                ");
+    mvprintw(4,2,"________________________/  __ /  __ /  __ /  _______________________________");
+    mvprintw(5,2,"_______________________/  /__/  /__/  /__/  /_______________________________");
+    mvprintw(6,2,"                       | /     /     /     /    ______                      ");
+    mvprintw(7,2,"                       |/    _/    _/    _/         O                       ");
+    mvprintw(8,2,"                                               _______/--<                  ");
+    mvaddch(3,30,92);
+    mvaddch(3,36,92);
+    mvaddch(3,42,92);
+    mvaddch(3,48,92);
+    mvaddch(4,31,92);
+    mvaddch(4,37,92);
+    mvaddch(4,43,92);
+    mvaddch(4,49,92);
+    mvaddch(6,29,92);
+    mvaddch(6,35,92);
+    mvaddch(6,41,92);
+    mvaddch(6,47,92);
+    mvaddch(6,50,92);
+    mvaddch(7,30,92);
+    mvaddch(7,36,92);
+    mvaddch(7,42,92);
+    mvaddch(7,48,92);
+    mvaddch(7,56,92);
+    mvaddch(8,49,92);
+    attroff(COLOR_PAIR(2));
 
     //Snako
 
+    attron(COLOR_PAIR(4));
     mvprintw(9,2, "                       ___                    _");
     mvprintw(10,2,"                      / __|   _ _     __ _   | |__   ___   ");
     mvprintw(11,2,"                       __    | '     / _' |  | / /  / _      ");
@@ -63,6 +67,7 @@ void menu()
     mvaddch(12,49,92);
     mvaddch(12,51,92);
     mvaddch(12,54,92);
+    attroff(COLOR_PAIR(4));
 
     mvprintw(14,34,"Comenzar Juego");
     mvprintw(15,34,"Instrucciones");
@@ -357,9 +362,9 @@ void imprimir_puerta(int vec[25][80], int &puerta)
             for (int j=0; j<=80; j++)
                 if (vec[i][j]==5)
                 {
-                    attron(COLOR_PAIR(2));
+                    attron(COLOR_PAIR(5));
                     mvaddch(i,j, ACS_BLOCK);
-                    attroff(COLOR_PAIR(2));
+                    attroff(COLOR_PAIR(5));
                     vec[i][j]=2;
                 }
 
@@ -493,7 +498,9 @@ void cabeza(int vec[25][80], int camino[25][80], int &contNivel, int &vidas, int
                 halfdelay(speed);
                 imprimir_puerta(vec, puerta);
                 puerta++;
+                attron(COLOR_PAIR(2));
                 mvaddch(y,x, '>');
+                attroff(COLOR_PAIR(2));
 
                 camino[y][x] = pasos;
                 pasos++;
@@ -537,7 +544,9 @@ void cabeza(int vec[25][80], int camino[25][80], int &contNivel, int &vidas, int
                 halfdelay(speed);
                 imprimir_puerta(vec, puerta);
                 puerta++;
+                attron(COLOR_PAIR(2));
                 mvaddch(y,x, '<');
+                attroff(COLOR_PAIR(2));
 
                 camino[y][x] = pasos;
                 pasos++;
@@ -580,7 +589,9 @@ void cabeza(int vec[25][80], int camino[25][80], int &contNivel, int &vidas, int
                 halfdelay(speed);
                 imprimir_puerta(vec, puerta);
                 puerta++;
+                attron(COLOR_PAIR(2));
                 mvaddch(y,x, '^');
+                attroff(COLOR_PAIR(2));
 
                 camino[y][x] = pasos;
                 pasos++;
@@ -621,7 +632,9 @@ void cabeza(int vec[25][80], int camino[25][80], int &contNivel, int &vidas, int
                 halfdelay(speed);
                 imprimir_puerta(vec, puerta);
                 puerta++;
+                attron(COLOR_PAIR(2));
                 mvaddch(y,x, 'v');
+                attroff(COLOR_PAIR(2));
 
                 camino[y][x] = pasos;
                 pasos++;
@@ -675,7 +688,6 @@ void imp_misc (int vidas, int nivel)
         mvaddch (23,9, ' ');
 }
 
-
 int main()
 {
     initscr();                      //Inicio NCurses
@@ -691,6 +703,7 @@ int main()
     init_pair(2,COLOR_GREEN,COLOR_BLACK);
     init_pair(3,COLOR_YELLOW,COLOR_BLACK);
     init_pair(4,COLOR_RED,COLOR_BLACK);
+    init_pair(5,COLOR_BLUE,COLOR_BLACK);
 
     int vec [25][80]={0};           //Generador de Matriz para comprobaciones
     int camino [25][80]={0};        //Generador de Matriz para Movimiento Snako
@@ -725,8 +738,15 @@ int main()
             else if (pressZ == '\n' && y==14)
             {
                 elegir = false;
-                clear();
                 juego = true;
+                clear();
+            }
+
+            else if (pressZ == '\n' && y==17)
+            {
+                elegir = false;
+                snako = false;
+                clear();
             }
             refresh();
         }
@@ -772,6 +792,7 @@ int main()
                 Sleep(1000);
             }
             juego = false;
+            clear();
         }
     }
 

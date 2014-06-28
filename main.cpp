@@ -5,15 +5,80 @@
 #include <windows.h>             //Incluye la funcion Sleep(), para el manejo de los segundos
 #include <time.h>                //Incluye la seed time(NULL) para numeros random
 
+void menu()
+{
+    //Creacion del borde
+    for(int i=0; i<78; i++)
+	{
+        mvaddch(1,i+1, ACS_BLOCK);
+        mvaddch(23,i+1,ACS_BLOCK);
+    }
+
+    for(int i=0; i<23; i++)
+	{
+        mvaddch(i+1,1,ACS_BLOCK);
+        mvaddch(i+1,78,ACS_BLOCK);
+    }
+
+    //Logo de Snako
+
+    mvprintw(2,2,"                     __    __    __    __                                   ");
+    mvprintw(3,2,"                    /     /     /     /                                     ");
+    mvprintw(4,2,"___________________/  __ /  __ /  __ /  ____________________________________");
+    mvprintw(5,2,"__________________/  /__/  /__/  /__/  /____________________________________");
+    mvprintw(6,2,"                  | /     /     /     /    ______                           ");
+    mvprintw(7,2,"                  |/    _/    _/    _/         O                            ");
+    mvprintw(8,2,"                                          _______/--<                       ");
+    mvaddch(3,25,92);
+    mvaddch(3,31,92);
+    mvaddch(3,37,92);
+    mvaddch(3,43,92);
+    mvaddch(4,26,92);
+    mvaddch(4,32,92);
+    mvaddch(4,38,92);
+    mvaddch(4,44,92);
+    mvaddch(6,24,92);
+    mvaddch(6,30,92);
+    mvaddch(6,36,92);
+    mvaddch(6,42,92);
+    mvaddch(6,45,92);
+    mvaddch(7,25,92);
+    mvaddch(7,31,92);
+    mvaddch(7,37,92);
+    mvaddch(7,43,92);
+    mvaddch(7,51,92);
+    mvaddch(8,44,92);
+
+    //Snako
+
+    mvprintw(9,2, "                       ___                    _");
+    mvprintw(10,2,"                      / __|   _ _     __ _   | |__   ___   ");
+    mvprintw(11,2,"                       __    | '     / _' |  | / /  / _      ");
+    mvprintw(12,2,"                      |___/  |_||_|   __,_|  |_ _    ___/ ");
+    mvaddch(11,24,92);
+    mvaddch(11,28,92);
+    mvaddch(11,35,92);
+    mvaddch(11,58,92);
+    mvaddch(12,39,92);
+    mvaddch(12,49,92);
+    mvaddch(12,51,92);
+    mvaddch(12,54,92);
+
+    mvprintw(14,34,"Comenzar Juego");
+    mvprintw(15,34,"Instrucciones");
+    mvprintw(16,34,"Creditos");
+    mvprintw(17,34,"Salir");
+    mvprintw(20,28,"(R) 2014 Programacion UDP ");
+}
+
 void murallas(int vec[25][80])
 {
     int a, b;
 
     mvaddstr (1,35, "S N A K O" );
-    mvaddstr (23,2, "Vidas:");
+    mvaddstr (23,2, "Vidas: ");
     mvaddstr (1,2, "Puntaje: ");
-    mvaddstr (1,70, "Nivel");
-    mvaddstr (23,65, "Tiempo:");
+    mvaddstr (1,70, "Nivel ");
 
     //Cuadro Nivel 0
     for(a=2; a<=22; a++)
@@ -50,6 +115,19 @@ void murallas(int vec[25][80])
         vec[14][b]=1;
     }
 
+    refresh();
+}
+
+void imprimir_muralla(int vec[25][80])
+{
+   for (int i=0; i<=25; i++)
+        for (int j=0; j<=80; j++)
+            if (vec[i][j]==1)
+            {
+                attron(COLOR_PAIR(1));
+                mvaddch(i,j, ACS_BLOCK);
+                attroff(COLOR_PAIR(1));
+            }
     refresh();
 }
 
@@ -271,15 +349,6 @@ void puertas(int vec[25][80])
     refresh();
 }
 
-void imprimir_muralla(int vec[25][80])
-{
-   for (int i=0; i<=25; i++)
-        for (int j=0; j<=80; j++)
-            if (vec[i][j]==1)
-                mvaddch(i,j, ACS_BLOCK);
-    refresh();
-}
-
 void imprimir_puerta(int vec[25][80], int &puerta)
 {
     //Imprime puertas tipo 2
@@ -288,7 +357,9 @@ void imprimir_puerta(int vec[25][80], int &puerta)
             for (int j=0; j<=80; j++)
                 if (vec[i][j]==5)
                 {
+                    attron(COLOR_PAIR(2));
                     mvaddch(i,j, ACS_BLOCK);
+                    attroff(COLOR_PAIR(2));
                     vec[i][j]=2;
                 }
 
@@ -308,7 +379,9 @@ void imprimir_puerta(int vec[25][80], int &puerta)
             for (int j=0; j<=80; j++)
                 if (vec[i][j]==6)
                 {
+                    attron(COLOR_PAIR(3));
                     mvaddch(i,j, ACS_BLOCK);
+                    attroff(COLOR_PAIR(3));
                     vec[i][j]=3;
                 }
 
@@ -328,7 +401,9 @@ void imprimir_puerta(int vec[25][80], int &puerta)
             for (int j=0; j<=80; j++)
                 if (vec[i][j]==7)
                 {
+                    attron(COLOR_PAIR(4));
                     mvaddch(i,j, ACS_BLOCK);
+                    attroff(COLOR_PAIR(4));
                     vec[i][j]=4;
                 }
 
@@ -369,29 +444,31 @@ void comida(int vec[25][80])
     refresh();
 }
 
-void cola(int camino[25][80], int vec[25][80], int y, int x, int pasos, int &largo)
+void cola(int camino[25][80], int vec[25][80], int y, int x, int pasos, int &largo, int &contNivel, int &puntaje)
 {
     if (vec[y][x]==9)
     {
         largo += 4;
         vec[y][x] = 0;
         comida(vec);
+        contNivel++;
+        puntaje += 10;
+        mvprintw(1,11,"%d", puntaje);
     }
-
-    int arrastre = largo;
 
     if (pasos>largo)
     {
         for (int i=0; i<=25; i++)
             for (int j=0; j<=80; j++)
-                if (camino[i][j]== pasos - arrastre)
+                if (camino[i][j]== pasos - largo)
                 {
                     mvaddch(i,j, ' ');
+                    /*camino[i][j]=0;*/   //Produce APPCRASH
                 }
     }
 }
 
-void cabeza(int vec[25][80], int camino[25][80])
+void cabeza(int vec[25][80], int camino[25][80], int &contNivel, int &vidas, int &puntaje)
 {
     int x=3, y=20;
     int ch;
@@ -402,6 +479,7 @@ void cabeza(int vec[25][80], int camino[25][80])
     bool abajo=false;
     bool arriba=false;
     int puerta = 0;
+    int condicionNivel = 5;
 
     int pasos = 1;
     int largo = 5;
@@ -419,12 +497,20 @@ void cabeza(int vec[25][80], int camino[25][80])
 
                 camino[y][x] = pasos;
                 pasos++;
-                cola(camino, vec, y, x, pasos, largo);
+                cola(camino, vec, y, x, pasos, largo, contNivel, puntaje);
 
                 x++;
                 refresh();
                 ch=getch();
-                if (ch==KEY_UP)
+
+                if (contNivel==condicionNivel)
+                {
+                    derecha=false;
+                    movimiento=false;
+                    clear();
+                }
+
+                else if (ch==KEY_UP)
                 {
                     derecha=false;
                     arriba=true;
@@ -434,6 +520,13 @@ void cabeza(int vec[25][80], int camino[25][80])
                     derecha=false;
                     abajo=true;
                 }
+            }
+
+            else
+            {
+                derecha=false;
+                movimiento=false;
+                vidas--;
             }
         }
 
@@ -448,12 +541,20 @@ void cabeza(int vec[25][80], int camino[25][80])
 
                 camino[y][x] = pasos;
                 pasos++;
-                cola(camino, vec, y, x, pasos, largo);
+                cola(camino, vec, y, x, pasos, largo, contNivel, puntaje);
 
                 x--;
                 refresh();
                 ch=getch();
-                if (ch==KEY_UP)
+
+                if (contNivel==condicionNivel)
+                {
+                    izquierda=false;
+                    movimiento=false;
+                    clear();
+                }
+
+                else if (ch==KEY_UP)
                 {
                     izquierda=false;
                     arriba=true;
@@ -463,6 +564,12 @@ void cabeza(int vec[25][80], int camino[25][80])
                     izquierda=false;
                     abajo=true;
                 }
+            }
+            else
+            {
+                izquierda=false;
+                movimiento=false;
+                vidas--;
             }
         }
 
@@ -477,12 +584,18 @@ void cabeza(int vec[25][80], int camino[25][80])
 
                 camino[y][x] = pasos;
                 pasos++;
-                cola(camino, vec, y, x, pasos, largo);
+                cola(camino, vec, y, x, pasos, largo, contNivel, puntaje);
 
                 y--;
                 refresh();
                 ch=getch();
-                if (ch==KEY_RIGHT)
+                if (contNivel==condicionNivel)
+                {
+                    arriba=false;
+                    movimiento=false;
+                    clear();
+                }
+                else if (ch==KEY_RIGHT)
                 {
                     arriba=false;
                     derecha=true;
@@ -492,6 +605,12 @@ void cabeza(int vec[25][80], int camino[25][80])
                     arriba=false;
                     izquierda=true;
                 }
+            }
+            else
+            {
+                arriba=false;
+                movimiento=false;
+                vidas--;
             }
         }
 
@@ -506,12 +625,18 @@ void cabeza(int vec[25][80], int camino[25][80])
 
                 camino[y][x] = pasos;
                 pasos++;
-                cola(camino, vec, y, x, pasos, largo);
+                cola(camino, vec, y, x, pasos, largo, contNivel, puntaje);
 
                 y++;
                 refresh();
                 ch=getch();
-                if (ch==KEY_RIGHT)
+                if (contNivel==condicionNivel)
+                {
+                    abajo=false;
+                    movimiento=false;
+                    clear();
+                }
+                else if (ch==KEY_RIGHT)
                 {
                     abajo=false;
                     derecha=true;
@@ -522,15 +647,37 @@ void cabeza(int vec[25][80], int camino[25][80])
                     izquierda=true;
                 }
             }
+            else
+            {
+                abajo=false;
+                movimiento=false;
+                vidas--;
+            }
         }
     }
 }
 
+void imp_misc (int vidas, int nivel)
+{
+    mvprintw(1,77,"%d", nivel);
+
+    if (vidas==3)
+    {
+        mvaddch (23,9, ACS_DIAMOND);
+        mvaddch (23,11, ACS_DIAMOND);
+        mvaddch (23,13, ACS_DIAMOND);
+    }
+    if (vidas==2)
+        mvaddch (23,13, ' ');
+    if (vidas==1)
+        mvaddch (23,11, ' ');
+    if (vidas==0)
+        mvaddch (23,9, ' ');
+}
+
+
 int main()
 {
-    int vec [25][80]={0};           //Generador de Matriz para comprobaciones futuras
-    int camino [25][80]={0};        //Generador de Matriz para Movimiento Snako
-
     initscr();                      //Inicio NCurses
     keypad(stdscr,1);               //Habilita teclado
     curs_set(0);                    //Esconde puntero
@@ -539,15 +686,95 @@ int main()
     nodelay(stdscr,1);              //Desactiva espera de lectura de teclado
     srand(time(NULL));              //Seed para rand()
 
-    murallas(vec);
-    imprimir_muralla(vec);
+    start_color();
+    init_pair(1,COLOR_CYAN,COLOR_BLACK);
+    init_pair(2,COLOR_GREEN,COLOR_BLACK);
+    init_pair(3,COLOR_YELLOW,COLOR_BLACK);
+    init_pair(4,COLOR_RED,COLOR_BLACK);
 
-    puertas(vec);
-    pasadizos(vec);
-    comida(vec);                      //Valor = 9
-    cabeza(vec, camino);
+    int vec [25][80]={0};           //Generador de Matriz para comprobaciones
+    int camino [25][80]={0};        //Generador de Matriz para Movimiento Snako
 
+    bool juego=false;
+    bool snako=true;
 
-    endwin();                          //Finaliza NCurses
+    while (snako)
+    {
+        menu();
+        bool elegir = true;
+        int x = 31;
+        int y = 14;
+        int pressZ;
+
+        while(elegir)
+        {
+            //Selección en el menú
+            mvaddch(y, x, ACS_DIAMOND);
+            pressZ = getch();
+            if (pressZ == KEY_DOWN && y<17)
+            {
+                mvprintw(y, x, " ");
+                y++;
+
+            }
+            else if (pressZ == KEY_UP && y>14)
+            {
+                mvprintw(y, x, " ");
+                y--;
+            }
+            else if (pressZ == '\n' && y==14)
+            {
+                elegir = false;
+                clear();
+                juego = true;
+            }
+            refresh();
+        }
+
+        while (juego)
+        {
+            int contNivel = 0;          //Contador para diferenciar niveles
+            int vidas = 3;              //Contador para las vidas
+            int nivel = 1;
+            int puntaje = 0;
+
+            murallas(vec);
+            imprimir_muralla(vec);
+            puertas(vec);
+            pasadizos(vec);
+            comida(vec);
+
+            while(vidas>0)
+            {
+                if (contNivel==5)
+                {
+                    for (int i=0; i<=25; i++)
+                        for (int j=0; j<=80; j++)
+                            vec[i][j]=0;
+
+                    murallas(vec);
+                    imprimir_muralla(vec);
+                    puertas(vec);
+                    pasadizos(vec);
+                    comida(vec);
+                    nivel++;
+                    contNivel=0;
+                }
+
+                imp_misc(vidas, nivel);
+                cabeza(vec, camino, contNivel, vidas, puntaje);
+
+                for (int i=0; i<=25; i++)
+                    for (int j=0; j<=80; j++)
+                        if (camino[i][j]!=0)
+                            mvaddch(i,j,' ');
+
+                Sleep(1000);
+            }
+            juego = false;
+        }
+    }
+
+    endwin();                       //Finaliza NCurses
     return 0;
 }

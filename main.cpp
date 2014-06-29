@@ -697,6 +697,63 @@ void imp_misc (int vidas, int nivel)
         mvaddch (23,9, ' ');
 }
 
+void imp_gameover()
+{
+    borde_menu();
+
+    attron(COLOR_PAIR(4));
+    mvprintw(5,2,"         ..|'''.|                                                          ");
+    mvprintw(6,2,"       .|'     '  ....  .. .. ..   ....     ... .... ... .... ... ..       ");
+    mvprintw(7,2,"       ||    ....'' .||  || || ||.|...||  .|  '|.'|.  |.|...|| ||' ''      ");
+    mvprintw(8,2,"       '|.    || .|' ||  || || ||||       ||   || '|.| ||      ||          ");
+    mvprintw(9,2,"        ''|...'| '|..'|'.|| || ||.'|...'   '|..|'  '|   '|...'.||.         ");
+    attroff(COLOR_PAIR(4));
+
+    attron(COLOR_PAIR(2));
+    mvprintw(13,2,"                   --..,_                     _,.--.                      ");
+    mvprintw(14,2,"                      `'.'.                .'`__ o  `;__.                 ");
+    mvprintw(15,2,"                         '.'.            .'.'`  '---'`  `                " );
+    mvprintw(16,2,"                            '.`'--....--'`.'                              ");
+    mvprintw(17,2,"                              `'--....--'`                                ");
+    attroff(COLOR_PAIR(2));
+
+    refresh();
+}
+
+void instrucciones()
+{
+    menu();
+    borde_menu();
+    attron(COLOR_PAIR(2));
+    mvprintw(7,2,"                __ ");
+    mvprintw(8,2,"               {OO}   ");
+    mvprintw(9,2,"                __/     ");
+    mvprintw(10,2,"                |^|                                             /    ");
+    mvprintw(11,2,"                | |____________________________________________/ /    ");
+    mvprintw(12,2,"                 _______________________________________________/  ");
+    mvaddch (9,17,92);
+    mvaddch(10,67,92);
+    mvaddch(12,18,92);
+    attroff(COLOR_PAIR(2));
+    attron(COLOR_PAIR(3));
+    mvprintw(3,4,"1- Recoge todo el alimento que puedas. Mas comida, mas puntos.");
+    mvprintw(4,4,"2- Cuidado! No choques con las murallas, puertas o contigo mismo.");
+    mvprintw(5,4,"3- Usa las flechas del teclado para moverte.");
+    mvprintw(6,4,"4- Diviertete!");
+    attroff(COLOR_PAIR(3));
+}
+
+void creditos()
+{
+    menu();
+    borde_menu();
+    attron(COLOR_PAIR(3));
+    mvprintw(6,33,"  Creado por:");
+    mvprintw(8,33,"Camilo Iturrieta");
+    mvprintw(10,33,"Guillermo Iglesias");
+    attroff(COLOR_PAIR(3));
+}
+
 int main()
 {
     initscr();                      //Inicio NCurses
@@ -730,6 +787,7 @@ int main()
         int x = 31;
         int y = 14;
         int pressZ;
+        int vidas;
 
         while(elegir)
         {
@@ -754,27 +812,15 @@ int main()
             }
             else if (pressZ == '\n' && y==15)
             {
-                //Instrucciones
                 clear();
-                menu();
-                borde_menu();
-                mvprintw(4,4,"1- Recoge todo el alimento que puedas. Mas comida, mas puntos.");
-                mvprintw(5,4,"2- Cuidado! No choques con las murallas, puertas o contigo mismo.");
-                mvprintw(6,4,"3- Usa las flechas del teclado para moverte.");
-                mvprintw(7,4,"4- Diviertete!");
+                instrucciones();
+
             }
             else if (pressZ=='\n' && y==16)
             {
-                //Creditos
                 clear();
-                menu();
-                borde_menu();
-                mvprintw(6,33,"  Creado por:");
-                mvprintw(8,33,"Camilo Iturrieta");
-                mvprintw(10,33,"Guillermo Iglesias");
+                creditos();
             }
-
-
             else if (pressZ == '\n' && y==17)
             {
                 //Salir
@@ -788,8 +834,13 @@ int main()
 
         while (juego)
         {
+            if (vidas<1)
+                for (int i=0; i<=25; i++)
+                    for (int j=0; j<=80; j++)
+                        vec[i][j]=0;
+
             int contNivel = 0;          //Contador para diferenciar niveles
-            int vidas = 3;              //Contador para las vidas
+            vidas = 3;                  //Contador para las vidas
             int nivel = 1;
             int puntaje = 0;
 
@@ -833,25 +884,7 @@ int main()
 
     while(gameover)
     {
-        borde_menu();
-
-        attron(COLOR_PAIR(4));
-        mvprintw(5,2,"         ..|'''.|                                                          ");
-        mvprintw(6,2,"       .|'     '  ....  .. .. ..   ....     ... .... ... .... ... ..       ");
-        mvprintw(7,2,"       ||    ....'' .||  || || ||.|...||  .|  '|.'|.  |.|...|| ||' ''      ");
-        mvprintw(8,2,"       '|.    || .|' ||  || || ||||       ||   || '|.| ||      ||          ");
-        mvprintw(9,2,"        ''|...'| '|..'|'.|| || ||.'|...'   '|..|'  '|   '|...'.||.         ");
-        attroff(COLOR_PAIR(4));
-
-        attron(COLOR_PAIR(2));
-        mvprintw(13,2,"                   --..,_                     _,.--.                      ");
-        mvprintw(14,2,"                      `'.'.                .'`__ o  `;__.                 ");
-        mvprintw(15,2,"                         '.'.            .'.'`  '---'`  `                " );
-        mvprintw(16,2,"                            '.`'--....--'`.'                              ");
-        mvprintw(17,2,"                              `'--....--'`                                ");
-        attroff(COLOR_PAIR(2));
-
-        refresh();
+        imp_gameover();
     }
 
     endwin();                       //Finaliza NCurses

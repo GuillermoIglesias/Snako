@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1403988059 source:c:\users\nazorth\udp\programación\ncurses\snako\main.cpp
+1404010301 source:c:\users\nazorth\udp\programación\ncurses\snako\main.cpp
 	<curses.h>
 	<windows.h>
 	<time.h>

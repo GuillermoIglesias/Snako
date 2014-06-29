@@ -5,23 +5,8 @@
 #include <windows.h>             //Incluye la funcion Sleep(), para el manejo de los segundos
 #include <time.h>                //Incluye la seed time(NULL) para numeros random
 
-void menu()
+void logo()
 {
-    //Creacion del borde
-    attron(COLOR_PAIR(1));
-    for(int i=0; i<78; i++)
-	{
-        mvaddch(1,i+1, ACS_BLOCK);
-        mvaddch(23,i+1,ACS_BLOCK);
-    }
-
-    for(int i=0; i<23; i++)
-	{
-        mvaddch(i+1,1,ACS_BLOCK);
-        mvaddch(i+1,78,ACS_BLOCK);
-    }
-    attroff(COLOR_PAIR(1));
-
     //Logo de Snako
     attron(COLOR_PAIR(2));
     mvprintw(2,2,"                          __    __    __    __                              ");
@@ -68,7 +53,27 @@ void menu()
     mvaddch(12,51,92);
     mvaddch(12,54,92);
     attroff(COLOR_PAIR(4));
+}
 
+void borde_menu()
+{
+    attron(COLOR_PAIR(1));
+    for(int i=0; i<78; i++)
+	{
+        mvaddch(1,i+1, ACS_BLOCK);
+        mvaddch(23,i+1,ACS_BLOCK);
+    }
+
+    for(int i=0; i<23; i++)
+	{
+        mvaddch(i+1,1,ACS_BLOCK);
+        mvaddch(i+1,78,ACS_BLOCK);
+    }
+    attroff(COLOR_PAIR(1));
+}
+
+void menu()
+{
     mvprintw(14,34,"Comenzar Juego");
     mvprintw(15,34,"Instrucciones");
     mvprintw(16,34,"Creditos");
@@ -459,6 +464,7 @@ void cola(int camino[25][80], int vec[25][80], int y, int x, int pasos, int &lar
         contNivel++;
         puntaje += 10;
         mvprintw(1,11,"%d", puntaje);
+        beep();
     }
 
     if (pasos>largo)
@@ -468,7 +474,9 @@ void cola(int camino[25][80], int vec[25][80], int y, int x, int pasos, int &lar
                 if (camino[i][j]== pasos - largo)
                 {
                     mvaddch(i,j, ' ');
-                    /*camino[i][j]=0;*/   //Produce APPCRASH
+                    /*camino[i][j]=0;   //Producia APPCRASH
+                    i=26;
+                    j=81;*/
                 }
     }
 }
@@ -502,11 +510,12 @@ void cabeza(int vec[25][80], int camino[25][80], int &contNivel, int &vidas, int
                 mvaddch(y,x, '>');
                 attroff(COLOR_PAIR(2));
 
+
                 camino[y][x] = pasos;
                 pasos++;
                 cola(camino, vec, y, x, pasos, largo, contNivel, puntaje);
-
                 x++;
+
                 refresh();
                 ch=getch();
 
@@ -710,10 +719,13 @@ int main()
 
     bool juego=false;
     bool snako=true;
+    bool gameover=false;
 
     while (snako)
     {
         menu();
+        logo();
+        borde_menu();
         bool elegir = true;
         int x = 31;
         int y = 14;
@@ -728,7 +740,6 @@ int main()
             {
                 mvprintw(y, x, " ");
                 y++;
-
             }
             else if (pressZ == KEY_UP && y>14)
             {
@@ -741,11 +752,35 @@ int main()
                 juego = true;
                 clear();
             }
+            else if (pressZ == '\n' && y==15)
+            {
+                //Instrucciones
+                clear();
+                menu();
+                borde_menu();
+                mvprintw(4,4,"1- Recoge todo el alimento que puedas. Mas comida, mas puntos.");
+                mvprintw(5,4,"2- Cuidado! No choques con las murallas, puertas o contigo mismo.");
+                mvprintw(6,4,"3- Usa las flechas del teclado para moverte.");
+                mvprintw(7,4,"4- Diviertete!");
+            }
+            else if (pressZ=='\n' && y==16)
+            {
+                //Creditos
+                clear();
+                menu();
+                borde_menu();
+                mvprintw(6,33,"  Creado por:");
+                mvprintw(8,33,"Camilo Iturrieta");
+                mvprintw(10,33,"Guillermo Iglesias");
+            }
+
 
             else if (pressZ == '\n' && y==17)
             {
+                //Salir
                 elegir = false;
                 snako = false;
+                gameover = true;
                 clear();
             }
             refresh();
@@ -782,18 +817,41 @@ int main()
                 }
 
                 imp_misc(vidas, nivel);
+                Sleep(900);
                 cabeza(vec, camino, contNivel, vidas, puntaje);
 
                 for (int i=0; i<=25; i++)
                     for (int j=0; j<=80; j++)
                         if (camino[i][j]!=0)
                             mvaddch(i,j,' ');
-
-                Sleep(1000);
             }
             juego = false;
+            Sleep(900);
             clear();
         }
+    }
+
+    while(gameover)
+    {
+        borde_menu();
+
+        attron(COLOR_PAIR(4));
+        mvprintw(5,2,"         ..|'''.|                                                          ");
+        mvprintw(6,2,"       .|'     '  ....  .. .. ..   ....     ... .... ... .... ... ..       ");
+        mvprintw(7,2,"       ||    ....'' .||  || || ||.|...||  .|  '|.'|.  |.|...|| ||' ''      ");
+        mvprintw(8,2,"       '|.    || .|' ||  || || ||||       ||   || '|.| ||      ||          ");
+        mvprintw(9,2,"        ''|...'| '|..'|'.|| || ||.'|...'   '|..|'  '|   '|...'.||.         ");
+        attroff(COLOR_PAIR(4));
+
+        attron(COLOR_PAIR(2));
+        mvprintw(13,2,"                   --..,_                     _,.--.                      ");
+        mvprintw(14,2,"                      `'.'.                .'`__ o  `;__.                 ");
+        mvprintw(15,2,"                         '.'.            .'.'`  '---'`  `                " );
+        mvprintw(16,2,"                            '.`'--....--'`.'                              ");
+        mvprintw(17,2,"                              `'--....--'`                                ");
+        attroff(COLOR_PAIR(2));
+
+        refresh();
     }
 
     endwin();                       //Finaliza NCurses
